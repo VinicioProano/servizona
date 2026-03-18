@@ -1,1 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+/* RESET */
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial;
+}
+
+/* FONDO */
+body{
+  background:#f4f6f8;
+}
+
+/* CONTENEDOR */
+.contenedor{
+  width:100%;
+  min-height:100vh;
+  background:white;
+  padding:20px;
+}
+
+/* SOLO PC */
+@media (min-width:768px){
+  body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .contenedor{
+    max-width:420px;
+    min-height:auto;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  }
+}
+
+/* LOGO */
+.logo{
+  width:120px;
+  display:block;
+  margin:0 auto 15px auto;
+}
+
+/* TITULO */
+.titulo{
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  margin-bottom:20px;
+}
+
+/* INPUTS */
+input{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+
+/* CHECK */
+.check{
+  margin-top:15px;
+  font-size:14px;
+}
+
+/* BOTON */
+.boton{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  background:#2e7d32;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* TARJETA */
+.tarjeta{
+  margin-top:20px;
+  padding:15px;
+  background:#eef4ff;
+  border-radius:10px;
+}
+
+.codigo{
+  font-size:20px;
+  font-weight:bold;
+  color:#1a237e;
+  text-align:center;
+  margin:10px 0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="contenedor">
+
+<img src="https://drive.google.com/thumbnail?id=1MWx_2oZRgm-etwX17ALMb49uDV7s8ZaB&sz=w500" class="logo">
+
+<div class="titulo">Registro de Cliente</div>
+
+<input id="nombres" placeholder="Nombres">
+<input id="apellidos" placeholder="Apellidos">
+<input id="cedula" placeholder="Número de cédula">
+<input id="correo" placeholder="Correo electrónico">
+<input id="celular" placeholder="Número de celular">
+
+<div class="check">
+<input type="checkbox" id="acepto"> Acepto términos y condiciones
+</div>
+
+<button class="boton" onclick="registrar()">SOLICITAR REGISTRO</button>
+
+<div id="mensaje"></div>
+
+</div>
+
+<script>
+
+let codigoCliente = null;
+
+function registrar(){
+
+  const nombres = document.getElementById("nombres").value;
+  const apellidos = document.getElementById("apellidos").value;
+
+  if(!nombres || !apellidos){
+    alert("Completa los campos");
+    return;
+  }
+
+  codigoCliente = "CLI" + Math.floor(1000 + Math.random()*9000);
+  const codigoActivacion = Math.floor(1000 + Math.random()*9000);
+
+  document.getElementById("mensaje").innerHTML = `
+    <div class="tarjeta">
+      Registro validado<br><br>
+
+      Código cliente:
+      <div class="codigo">${codigoCliente}</div>
+
+      Código activación:
+      <div class="codigo">${codigoActivacion}</div>
+    </div>
+  `;
+
+}
+
+</script>
+
+</body>
+</html>

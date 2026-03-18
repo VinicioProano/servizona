@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 
-/* RESET */
-*{
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial;
-}
-
-/* FONDO */
 body{
+  font-family:Arial;
   background:#f4f6f8;
+  margin:0;
+  padding:0;
+  text-align:center;
 }
 
-/* CONTENEDOR */
-.contenedor{
-  width:100%;
+.contenedor {
+  width: 100%;
   min-height:100vh;
-  background:white;
-  padding:20px;
+  background: white;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* SOLO PC */
-@media (min-width:768px){
+/* PC */
+@media (min-width: 768px){
   body{
     display:flex;
     justify-content:center;
@@ -43,22 +39,17 @@ body{
   }
 }
 
-/* LOGO */
 .logo{
-  width:120px;
-  display:block;
-  margin:0 auto 15px auto;
+width:120px;
+margin-bottom:15px;
 }
 
-/* TITULO */
 .titulo{
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
-  margin-bottom:20px;
+font-size:22px;
+font-weight:bold;
+margin-bottom:20px;
 }
 
-/* INPUTS */
 input{
   width:100%;
   padding:14px;
@@ -68,39 +59,50 @@ input{
   font-size:15px;
 }
 
-/* CHECK */
-.check{
-  margin-top:15px;
-  font-size:14px;
-}
-
-/* BOTON */
 .boton{
-  width:100%;
-  margin-top:18px;
-  padding:14px;
-  background:#2e7d32;
-  color:white;
-  border:none;
-  border-radius:8px;
-  font-size:16px;
-  cursor:pointer;
+background:#2e7d32;
+color:white;
+padding:14px;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+width:100%;
+margin-top:15px;
 }
 
-/* TARJETA */
+.cancelar{
+background:#c62828;
+color:white;
+padding:12px;
+border:none;
+border-radius:8px;
+margin-top:10px;
+width:100%;
+}
+
+.rectificar{
+background:#f9a825;
+color:white;
+padding:12px;
+border:none;
+border-radius:8px;
+margin-top:10px;
+width:100%;
+}
+
 .tarjeta{
-  margin-top:20px;
-  padding:15px;
-  background:#eef4ff;
-  border-radius:10px;
+margin-top:20px;
+padding:18px;
+background:#eef4ff;
+border-radius:10px;
+border:1px solid #c9dafc;
 }
 
 .codigo{
-  font-size:20px;
-  font-weight:bold;
-  color:#1a237e;
-  text-align:center;
-  margin:10px 0;
+font-size:20px;
+font-weight:bold;
+color:#1a237e;
 }
 
 </style>
@@ -117,50 +119,91 @@ input{
 
 <input id="nombres" placeholder="Nombres">
 <input id="apellidos" placeholder="Apellidos">
-<input id="cedula" placeholder="Número de cédula">
+<input id="cedula" placeholder="Número de cédula" maxlength="10">
 <input id="correo" placeholder="Correo electrónico">
-<input id="celular" placeholder="Número de celular">
+<input id="celular" placeholder="Número de celular" maxlength="10">
 
-<div class="check">
+<div style="margin-top:15px;">
 <input type="checkbox" id="acepto"> Acepto términos y condiciones
 </div>
 
-<button class="boton" onclick="registrar()">SOLICITAR REGISTRO</button>
+<button id="btnSolicitar" class="boton" onclick="solicitarRegistro()">
+SOLICITAR REGISTRO
+</button>
 
 <div id="mensaje"></div>
+
+<div id="botonesFinal" style="display:none;">
+
+<button class="cancelar" onclick="cancelar()">Cancelar</button>
+<button class="rectificar" onclick="rectificar()">Rectificar</button>
+<button class="boton" onclick="continuar()">Continuar</button>
+
+</div>
 
 </div>
 
 <script>
 
-let codigoCliente = null;
+/* INPUTS NUMERICOS */
+document.getElementById("cedula").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
+document.getElementById("celular").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
 
-function registrar(){
+let codigoCliente=null;
+let codigoActivacion=null;
 
-  const nombres = document.getElementById("nombres").value;
-  const apellidos = document.getElementById("apellidos").value;
+/* VALIDAR */
+function solicitarRegistro(){
 
-  if(!nombres || !apellidos){
-    alert("Completa los campos");
-    return;
-  }
+const nombres=document.getElementById("nombres").value.trim();
+const apellidos=document.getElementById("apellidos").value.trim();
 
-  codigoCliente = "CLI" + Math.floor(1000 + Math.random()*9000);
-  const codigoActivacion = Math.floor(1000 + Math.random()*9000);
+if(!nombres||!apellidos){
+alert("Completa los campos");
+return;
+}
 
-  document.getElementById("mensaje").innerHTML = `
-    <div class="tarjeta">
-      Registro validado<br><br>
+/* SIMULACION (luego conectamos backend real) */
+codigoCliente="CLI"+Math.floor(1000+Math.random()*9000);
+codigoActivacion=Math.floor(1000+Math.random()*9000);
 
-      Código cliente:
-      <div class="codigo">${codigoCliente}</div>
+document.getElementById("mensaje").innerHTML=`
+<div class="tarjeta">
+Registro validado<br><br>
 
-      Código activación:
-      <div class="codigo">${codigoActivacion}</div>
-    </div>
-  `;
+Código cliente:
+<div class="codigo">${codigoCliente}</div>
+
+Código activación:
+<div class="codigo">${codigoActivacion}</div>
+</div>
+`;
+
+document.getElementById("botonesFinal").style.display="block";
 
 }
+
+/* BOTONES */
+
+function continuar(){
+alert("Aquí conectamos con activación (siguiente paso)");
+}
+
+function rectificar(){
+document.getElementById("mensaje").innerHTML="";
+document.getElementById("botonesFinal").style.display="none";
+}
+
+function cancelar(){
+if(confirm("¿Desea salir?")){
+window.close();
+}
+}
+
+/* INIT */
+window.onload=function(){
+document.getElementById("nombres").focus();
+};
 
 </script>
 

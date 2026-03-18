@@ -124,8 +124,22 @@ color:#1a237e;
 <input id="celular" placeholder="Número de celular" maxlength="10">
 
 <div style="margin-top:15px;">
-<input type="checkbox" id="acepto"> Acepto términos y condiciones
+  <input type="checkbox" id="acepto">
+  Acepto términos y condiciones
 </div>
+
+<button style="
+  margin-top:10px;
+  background:#1976d2;
+  color:white;
+  border:none;
+  padding:10px;
+  border-radius:6px;
+  width:100%;
+  cursor:pointer;
+" onclick="verTerminos()">
+Ver términos
+</button>
 
 <button id="btnSolicitar" class="boton" onclick="solicitarRegistro()">
 SOLICITAR REGISTRO
